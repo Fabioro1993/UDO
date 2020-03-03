@@ -1,0 +1,28 @@
+<div class="logo">
+    <a href="#" class="simple-text logo-mini">
+        <div class="logo-img">
+            <img src="./assets/img/angular2-logo-white.png"/>
+        </div>
+    </a>
+    <a href="#" class="simple-text logo-normal">
+        FastExpress
+    </a>
+</div>
+<div class="sidebar-wrapper">
+    <br> 
+    <div class="text-center"> 
+        <mat-form-field>
+            <select matNativeControl required style="color: #FFFFFF" (change)="selectNavbar()" [(ngModel)]="selectTipo">
+                <option value="P" style="color: red">Productos</option>
+                <option value="R" style="color: red">Restaurantes</option>
+            </select>
+        </mat-form-field>
+    </div>
+    <ul class="nav">
+        <li routerLinkActive="active" *ngFor="let menuTipo of tipoComida" class="nav-item">
+            <a (click)="sidebarTipo(menuTipo.id_tipo, menuTipo.id_restaurant)">
+                <p>{{menuTipo.nombre_tipo}} {{menuTipo.nombre_rest}}</p>
+            </a>
+        </li>
+    </ul>
+</div>    
