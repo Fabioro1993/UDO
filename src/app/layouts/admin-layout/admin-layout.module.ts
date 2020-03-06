@@ -14,12 +14,15 @@ import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
+import { RestauranteComponent } from '../../restaurante/restaurante.component'
+import { PedidoComponent } from '../../pedido/pedido.component'
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
+    ReactiveFormsModule,
     ChartsModule,
     NgbModule,
     ToastrModule.forRoot()
@@ -33,6 +36,8 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
+    RestauranteComponent,
+    PedidoComponent
   ]
 })
 

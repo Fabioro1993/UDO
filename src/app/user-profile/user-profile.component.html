@@ -1,11 +1,12 @@
 <div class="panel-header panel-header-sm">
 </div>
 <div class="main-content">
+
   <div class="row">
-    <div class="col-md-8">
+    <!-- <div class="col-md-4">
       <div class="card">
         <div class="card-header">
-          <h5 class="title">Edit Profile</h5>
+          <h5 class="title">Edit Profile AA </h5>
         </div>
         <div class="card-body">
           <form>
@@ -82,26 +83,27 @@
           </form>
         </div>
       </div>
-    </div>
-    <div class="col-md-4">
+    </div> -->
+
+    <div class="col-md-4" *ngFor="let menu of menuService.viewMenu">
       <div class="card card-user">
         <div class="image">
-          <img src="../assets/img/bg5.jpg" alt="...">
+          <img src="../assets/img/comida/chesse.jpeg" alt="...">
         </div>
         <div class="card-body">
           <div class="author">
             <a href="#">
-              <img class="avatar border-gray" src="../assets/img/mike.jpg" alt="...">
-              <h5 class="title">Mike Andrew</h5>
+              <img class="avatar border-gray" src="../assets/img/comida/{{menu.imag_menu}}.jpeg" alt="...">
+              <h5 class="title">{{menu.nombre_menu}}</h5>
             </a>
             <p class="description">
-              michael24
+              {{menu.restaurante.nombre_rest}}
+              <br>
+              {{menu.precio}} $$
             </p>
           </div>
           <p class="description text-center">
-            "Lamborghini Mercy
-            <br> Your chick she so thirsty
-            <br> I'm in that two seat Lambo"
+            {{menu.descr_menu}}
           </p>
         </div>
         <hr>
@@ -113,7 +115,7 @@
             <i class="fab fa-twitter"></i>
           </button>
           <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-            <i class="fab fa-google-plus-g"></i>
+            <i class="fab fa-instagram"></i>
           </button>
         </div>
       </div>

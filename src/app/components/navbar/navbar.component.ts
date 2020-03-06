@@ -4,6 +4,10 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 import { Router } from '@angular/router';
 import Chart from 'chart.js';
 
+import {FormControl} from '@angular/forms';
+
+import { MenuService } from '../../service/menu.service';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -18,9 +22,16 @@ export class NavbarComponent implements OnInit {
 
     public isCollapsed = true;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
+    myControl = new FormControl();
+    buscar: string = '';
+
+    constructor(location: Location,  private element: ElementRef, private router: Router, private menuService: MenuService) {
       this.location = location;
-          this.sidebarVisible = false;
+      this.sidebarVisible = false;
+    }
+
+    searchNavbar(){
+      this.menuService.navbarBuscar(this.buscar);
     }
 
     ngOnInit(){
@@ -140,6 +151,12 @@ export class NavbarComponent implements OnInit {
 
     getTitle(){
       var titlee = this.location.prepareExternalUrl(this.location.path());
+
+      if( titlee.charAt(1) === ''){
+        titlee = this.menuService.titulo;
+        return titlee;
+      }
+
       if(titlee.charAt(0) === '#'){
           titlee = titlee.slice( 2 );
       }
@@ -150,6 +167,6 @@ export class NavbarComponent implements OnInit {
               return this.listTitles[item].title;
           }
       }
-      return 'Dashboard';
+      return titlee;
     }
 }

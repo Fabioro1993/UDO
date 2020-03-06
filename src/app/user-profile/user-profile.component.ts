@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { MenuService } from '../service/menu.service';
 
 @Component({
   selector: 'app-user-component',
@@ -7,17 +8,25 @@ import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 })
 export class UserProfileComponent implements OnInit {
 
-  @Input() valorSidebar: any;
+  menu: any;
+  viewMenu: any[] = [];
 
-  constructor() { }
+  constructor(private menuService: MenuService) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.valorSidebar) {
-     console.log(this.valorSidebar); 
-    }
-    
-  }
   ngOnInit() {
+    this.getMenu();
+  }
+
+  getMenu() {
+    this.menuService.getMenu().subscribe(
+      resultado => {
+        this.menu = resultado;
+        this.viewMenu = this.menu;
+      },
+      error => {
+        console.log(JSON.stringify(error));
+      }
+    )
   }
 
 }

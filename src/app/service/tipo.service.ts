@@ -9,6 +9,7 @@ export class TipoService {
   constructor( private httpClient:HttpClient) { }
 
   getTipo(){
+    //return this.httpClient.get("http://localhost:8000/tipo");
     return this.httpClient.get("http://localhost/FastExpress/public/tipo");
   }
 }

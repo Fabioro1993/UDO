@@ -3,6 +3,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 //Servicios
 import { TipoService } from '../../service/tipo.service'
 import { RestauranteService } from '../../service/restaurante.service';
+import { MenuService } from '../../service/menu.service';
 
 declare interface RouteInfo {
     path: string;
@@ -31,29 +32,29 @@ export class SidebarComponent implements OnInit {
   menuItems: any[];
   tipoComida: any;
   selectTipo: any = "P";
-  
+
   objetoNavbar: any = {
     id: '', tipo: ''
   }
 
   @Output() sidebarSelect = new EventEmitter();
 
-  constructor( private tipoService:TipoService, private restauranteService:RestauranteService) { 
+  constructor(private tipoService: TipoService, private restauranteService: RestauranteService, public menuService: MenuService) { 
     this.getTipo();
   }
 
-  sidebarTipo(tipo, restaurante ){
-    //console.log(tipo, restaurante)
+  sidebarTipo(tipo, restaurante){
+
     if (tipo != null) {
       this.objetoNavbar.id = tipo;
       this.objetoNavbar.tipo = 'producto';
-      this.sidebarSelect.emit(this.objetoNavbar);
     }
     if (restaurante != null) {
       this.objetoNavbar.id = restaurante;
       this.objetoNavbar.tipo = 'restaurante';
-      this.sidebarSelect.emit(this.objetoNavbar);
     }
+    
+    this.menuService.menuSelect(this.objetoNavbar)
   }
   
   selectNavbar(){

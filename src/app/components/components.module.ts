@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+
+import { Routes, RouterModule } from '@angular/router'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -11,7 +12,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { UserProfileComponent } from './user-profile/user-profile.component'
 
 @NgModule({
   imports: [
@@ -26,14 +26,12 @@ import { UserProfileComponent } from './user-profile/user-profile.component'
   declarations: [
     FooterComponent,
     NavbarComponent,
-    SidebarComponent,
-    UserProfileComponent
+    SidebarComponent
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
-    SidebarComponent,
-    UserProfileComponent
+    SidebarComponent
   ]
 })
 export class ComponentsModule { }
