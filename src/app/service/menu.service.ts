@@ -74,4 +74,9 @@ export class MenuService {
     let header = new HttpHeaders().set('Content-type', 'application/json')
     return this.httpClient.post(this.ruta_env + "/menu/store", json, { headers: header });
   }
+
+  deleteMenuRest(id){
+    //let header = new HttpHeaders().set('Content-type', 'application/json')
+    return this.httpClient.get(this.ruta_env + "/menu/"+id+"/delete");
+  }
 }

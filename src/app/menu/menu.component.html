@@ -1,42 +1,10 @@
-<div class="panel-header panel-header-sm"></div>
+<!-- <div class="panel-header panel-header-sm"></div> -->
 <div class="main-content">
   <div class="row">
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-            <h5 class="title">Menu de </h5>
-          <!-- <h5 class="title">Menu de {{ restauranteService.newRest.nombre_rest }}</h5> -->
-        </div>
-        <div class="card-body">
-          <table class="table">
-            <thead class=" text-primary">
-              <th>Nombre</th>
-              <th>Descripcion</th>
-              <th>Tipo</th>
-              <th class="text-right">Precio</th>
-              <th>Imagen</th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let menuRest of viewMenu">
-                <td>{{menuRest.nombre_menu}}</td>
-                <td>{{menuRest.descr_menu}}</td>
-                <td>{{menuRest.id_tipo}}</td>
-                <td class="text-right">{{menuRest.precio}}</td>
-                <td> {{menuRest.imag_menu}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="main-content">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="title">Menu de </h5>
+          <h5 class="title">Agregar Platillo</h5>
           <!-- <h5 class="title">Menu de {{ restauranteService.newRest.nombre_rest }}</h5> -->
         </div>
         <div class="card-body">
@@ -100,6 +68,47 @@
               </div>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+            <h5 class="title">Menu de </h5>
+          <!-- <h5 class="title">Menu de {{ restauranteService.newRest.nombre_rest }}</h5> -->
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead class=" text-primary">
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Tipo</th>
+              <th class="text-right">Precio</th>
+              <th>Accion</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let menuRest of viewMenu">
+                <td> {{menuRest.imag_menu}}</td>
+                <td>{{menuRest.nombre_menu}}</td>
+                <td>{{menuRest.descr_menu}}</td>
+                <td>{{menuRest.id_tipo}}</td>
+                <td class="text-right">{{menuRest.precio}}</td>
+                <td class="td-actions">
+                  <button type="button" rel="tooltip" title="Editar" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
+                    <i class="now-ui-icons ui-2_settings-90"></i>
+                  </button>
+                  <button type="button" rel="tooltip" title="Eliminar" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" (click)="eliminarPlato(menuRest.id_menu)">
+                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

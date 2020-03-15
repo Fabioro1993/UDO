@@ -4,6 +4,7 @@ import { TipoService } from '../service/tipo.service';
 import { MenuService } from '../service/menu.service';
 import { Router } from '@angular/router';
 import { RestauranteService } from '../service/restaurante.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-menu',
@@ -34,7 +35,8 @@ export class MenuComponent implements OnInit {
     this.formMenu.get('id_restaurant').setValue(this.restauranteService.newRest.id_restaurant);
     this.menuService.addMenuRest(this.formMenu.value).subscribe(
       resultado =>{
-        console.log(resultado);
+        this.restMenu();
+        this.formMenu.reset();
       }
     );
   }
@@ -44,25 +46,59 @@ export class MenuComponent implements OnInit {
       resultado =>
       {
         this.restMenuVar = resultado;
-
         this.viewMenu = this.restMenuVar;
-        
-          this.viewMenu = this.restMenuVar.filter(item => {
-            // if (item.id_restaurant == this.restauranteService.newRest.id_restaurant ) {
-            if (item.id_restaurant == 1 ) {
-              return item;
-            }
-          });
-
-
-
-
-
-
+        this.viewMenu = this.restMenuVar.filter(item => {
+         if (item.id_restaurant == this.restauranteService.newRest.id_restaurant ) {
+            return item;
+          }
+        });
       }
     )
   }
 
+  eliminarPlato(id_menu: number){
+    console.log(id_menu)
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this imaginary file!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        this.menuService.deleteMenuRest(id_menu).subscribe(resultado => {
+          this.restMenu();
+          Swal.fire(
+            'Deleted!',
+            'Your imaginary file has been deleted.',
+            'success'
+          )
+        },
+        error =>{
+          Swal.fire(
+            'Cancelled',
+            'Your imaginary file is safe :)',
+            'error'
+          )
+        });
+        // Swal.fire(
+        //   'Deleted!',
+        //   'Your imaginary file has been deleted.',
+        //   'success'
+        // )
+      // For more information about handling dismissals please visit
+      // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
+  }
+  
   /*updateProfilePhoto(idUser: number, file: File): Observable<any>{
     const data = new FormData();
     data.append('file', file, file.name);
