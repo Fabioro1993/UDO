@@ -16,6 +16,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { RestauranteComponent } from '../../restaurante/restaurante.component'
 import { PedidoComponent } from '../../pedido/pedido.component'
+import { MenuComponent } from '../../menu/menu.component';
+
 
 @NgModule({
   imports: [
@@ -37,7 +39,8 @@ import { PedidoComponent } from '../../pedido/pedido.component'
     MapsComponent,
     NotificationsComponent,
     RestauranteComponent,
-    PedidoComponent
+    PedidoComponent, 
+    MenuComponent
   ]
 })
 

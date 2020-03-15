@@ -7,6 +7,7 @@ import Chart from 'chart.js';
 import {FormControl} from '@angular/forms';
 
 import { MenuService } from '../../service/menu.service';
+import { LoginService } from '../../service/login.service';
 
 @Component({
   selector: 'app-navbar',
@@ -24,10 +25,13 @@ export class NavbarComponent implements OnInit {
 
     myControl = new FormControl();
     buscar: string = '';
+    usuario: any;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router, private menuService: MenuService) {
+    constructor(location: Location,  private element: ElementRef, private router: Router, private menuService: MenuService,
+      private loginService:LoginService) {
       this.location = location;
       this.sidebarVisible = false;
+      this.usuario = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).user : null;
     }
 
     searchNavbar(){
@@ -168,5 +172,14 @@ export class NavbarComponent implements OnInit {
           }
       }
       return titlee;
+    }
+
+    logout(){
+      this.loginService.servLogout().subscribe(
+        resultado => {
+          this.usuario = null;
+          this.router.navigate(['/']);
+        }
+      )
     }
 }

@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
+  ruta_env = environment.ruta_base;
   viewUsuario: any;
   usuarioFilter: any;
 
@@ -14,8 +16,7 @@ export class UsuarioService {
    }
 
   getUsuario(){
-    this.httpClient.get("http://localhost/FastExpress/public/usuario").subscribe(
-    //this.httpClient.get("http://localhost:8000/usuario").subscribe(
+    this.httpClient.get(this.ruta_env+"/usuario").subscribe(
       resultado => {
         this.usuarioFilter = resultado;
         this.viewUsuario = this.usuarioFilter;
@@ -28,10 +29,6 @@ export class UsuarioService {
 
       }
     );
-    //console.log(this.viewUsuario, 'a', this.usuarioFilter)
-    //return this.httpClient.get("http://localhost:8000/usuario");
-    return this.httpClient.get("http://localhost/FastExpress/public/usuario");
-    
-  }
-  
+    return this.httpClient.get(this.ruta_env+"/usuario");
+  } 
 }

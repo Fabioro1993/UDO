@@ -1,6 +1,6 @@
 <div class="panel-header panel-header-sm">
 </div>
-<div class="main-content">
+<div class="main-content" *ngIf="viewMenu != 1">
   <div class="row">
     <div class="col-md-12">
       <div class="card">
@@ -8,106 +8,109 @@
           <h5 class="title">Nuevo Restaurante</h5>
         </div>
         <div class="card-body">
-          <div class="row">
-            <div class="col-md-3 pr-1">
-              <div class="form-group">
-                <label>Nombre</label>
-                <input type="text" class="form-control" [(ngModel)]="varRest.nombre_rest" placeholder="Nombre del negocio" required id="nombre_rest">
+          <form class="form" [formGroup]="FormRest" (submit)="onRest()">
+            <div class="row">
+              <div class="col-md-3 pr-1">
+                <div class="form-group">
+                  <label>Nombre</label>
+                  <input type="text" class="form-control" formControlName="nombre_rest" placeholder="Nombre del negocio" required>
+                </div>
+              </div>
+              <div class="col-md-4 pr-1">
+                <div class="form-group">
+                  <label>Telefono</label>
+                  <input type="number" class="form-control" placeholder="WhatsApp" required formControlName="telefono_rest">
+                </div>
+              </div>
+              <div class="col-md-4 pr-1">
+                <div class="form-group">
+                  <label>Social</label>
+                  <input type="text" class="form-control" placeholder="Instagram/Facebook" required formControlName="social">
+                </div>
               </div>
             </div>
-            <div class="col-md-4 pr-1">
-              <div class="form-group">
-                <label>Telefono</label>
-                <input type="number" class="form-control" placeholder="WhatsApp" required [(ngModel)]="varRest.telefono_rest">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Direccion</label>
+                  <input type="text" class="form-control" placeholder="Direccion del negocio" required formControlName="direccion_rest">
+                </div>
               </div>
             </div>
-            <div class="col-md-4 pr-1">
-              <div class="form-group">
-                <label>Social</label>
-                <input type="text" class="form-control" placeholder="Instagram/Facebook" required [(ngModel)]="varRest.social">
+            <br>
+            <div class="row">
+              <div class="col-md-3 pr-1">
+                <div class="form-group">
+                  <label>Responsable</label>
+                  <input type="text" class="form-control" placeholder="Nombre del responsable" required formControlName="nombre">
+                </div>
+              </div>
+              <div class="col-md-4 pr-1">
+                <div class="form-group">
+                  <label>Cedula</label>
+                  <input type="number" class="form-control" placeholder="cedula" required formControlName="cedula">
+                </div>
+              </div>
+              <div class="col-md-4 pr-1">
+                <div class="form-group">
+                  <label>Telefono</label>
+                  <input type="number" class="form-control" placeholder="Telefono de contacto" required formControlName="telefono">
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>Direccion</label>
-                <input type="text" class="form-control" placeholder="Direccion del negocio" required [(ngModel)]="varRest.direccion_rest">
+            <div class="row">
+              <div class="col-md-4 pr-1">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input name="email" id="email" type="email" class="form-control" placeholder="Email" required formControlName="email">
+                  <label *ngIf="FormRest.controls.email.dirty && FormRest.controls.email.errors?.email" class="error" for="required">Email invalid.</label>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label>Direccion</label>
+                  <input type="text" class="form-control" placeholder="Home Address" required formControlName="direccion">
+                </div>
               </div>
             </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col-md-3 pr-1">
-              <div class="form-group">
-                <label>Responsable</label>
-                <input type="text" class="form-control" placeholder="Nombre del responsable" required>
-              </div>
-            </div>
-            <div class="col-md-4 pr-1">
-              <div class="form-group">
-                <label>Cedula</label>
-                <input type="number" class="form-control" placeholder="cedula" required>
-              </div>
-            </div>
-            <div class="col-md-4 pr-1">
-              <div class="form-group">
-                <label>Telefono</label>
-                <input type="number" class="form-control" placeholder="Telefono de contacto" required>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 pr-1">
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input name="email" id="email" type="email" class="form-control" placeholder="Email" required>
-              </div>
-            </div>
-            <div class="col-md-8">
-              <div class="form-group">
-                <label>Direccion</label>
-                <input type="text" class="form-control" placeholder="Home Address" required>
-              </div>
-            </div>
-          </div>
-          <br>
-          <div class="row justify-content-center">
-            <div class="col-5" >
-              <div class="form-group">
-                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                  <div class="fileinput-new thumbnail">
-                      <img src="./assets/img/image_placeholder.jpg" alt="...">
-                  </div>
-                  <div class="fileinput-preview fileinput-exists thumbnail"></div>
-                  <div>
-                      <span class="btn btn-rose btn-round btn-file">
-                          <span class="fileinput-new">Logo del negocio</span>
-                          <span class="fileinput-exists">Cambiar</span>
-                          <input type="file" name="..." />
-                      </span>
-                  <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Eliminar</a>
+            <br>
+            <div class="row justify-content-center">
+              <div class="col-5" >
+                <div class="form-group">
+                  <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                    <div class="fileinput-new thumbnail">
+                        <img src="./assets/img/image_placeholder.jpg" alt="...">
+                    </div>
+                    <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                    <div>
+                        <span class="btn btn-rose btn-round btn-file">
+                            <span class="fileinput-new">Logo del negocio</span>
+                            <span class="fileinput-exists">Cambiar</span>
+                            <input type="file" formControlName="logo_rest"/>
+                        </span>
+                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Eliminar</a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row justify-content-end">
-            <div class="card-footer">
-              <button class="btn btn-fill btn-primary mr-1" type="submit" (click)="saveRest()">
-                Guardar
-              </button>
+            <div class="row justify-content-end">
+              <div class="card-footer">
+                <button class="btn btn-fill btn-primary mr-1" type="submit" [disabled]="FormRest.invalid"> Guardar </button>
+              </div>
             </div>
-          </div>
-          <br>
-          <div class="row col-md-12">
-            <span>Nota:     </span>
             <br>
-            <p>
-               Al responsable del negocio se le asignara la clave generica, que posteriormente debe cambiar.
-            </p>
-          </div>
+            <div class="row col-md-12">
+              <span>Nota:</span>
+              <br>
+              <p>
+                Al responsable del negocio se le asignara la clave generica, que posteriormente debe cambiar.
+              </p>
+            </div>
+          </form>
         </div>
       </div>
     </div>
+  </div>
 </div>
+<app-menu *ngIf="viewMenu == 1"></app-menu>

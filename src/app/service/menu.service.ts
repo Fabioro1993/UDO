@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MenuService {
 
+  ruta_env = environment.ruta_base;
   menuFilter: any;
   viewMenu: any;
   id_new: any;
@@ -14,21 +16,18 @@ export class MenuService {
   constructor( private httpClient:HttpClient) { }
 
   getMenu(){
-    this.httpClient.get("http://localhost/FastExpress/public/menu").subscribe(
-    //this.httpClient.get("http://localhost:8000/menu").subscribe(
+    this.httpClient.get(this.ruta_env+"/menu").subscribe(
       resultado => {
         this.viewMenu = resultado;
       }
     );
-    //return this.httpClient.get("http://localhost:8000/menu");
-    return this.httpClient.get("http://localhost/FastExpress/public/menu");
+    return this.httpClient.get(this.ruta_env+"/menu");
   }
 
   menuSelect(objSidebar){
     this.id_new = objSidebar.id;
-
-    //this.httpClient.get("http://localhost:8000/menu").subscribe(
-    this.httpClient.get("http://localhost/FastExpress/public/menu").subscribe(
+    
+    this.httpClient.get(this.ruta_env+"/menu").subscribe(
       resultado => {
         this.menuFilter = resultado;
         this.viewMenu = this.menuFilter;
@@ -54,9 +53,8 @@ export class MenuService {
     return this.viewMenu;
   }
 
-  navbarBuscar(texto){
-    //this.httpClient.get("http://localhost:8000/menu").subscribe(
-    this.httpClient.get("http://localhost/FastExpress/public/menu").subscribe(
+  navbarBuscar(texto){   
+    this.httpClient.get(this.ruta_env+"/menu").subscribe(
       resultado => {
         this.menuFilter = resultado;
         this.viewMenu = this.menuFilter;
@@ -69,5 +67,13 @@ export class MenuService {
       }
     );
     return this.viewMenu;
+  }
+
+  addMenuRest(formMenu){
+    let json = JSON.stringify(formMenu);
+
+    let header = new HttpHeaders().set('Content-type', 'application/json')
+
+    return this.httpClient.post(this.ruta_env + "/menu/store", json, { headers: header });
   }
 }

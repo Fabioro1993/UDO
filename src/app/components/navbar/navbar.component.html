@@ -37,7 +37,7 @@
                 </p>
               </a>
             </li> -->
-            <li class="nav-item" ngbDropdown>
+            <li class="nav-item" ngbDropdown *ngIf="usuario">
               <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
                 <i class="now-ui-icons location_world"></i>
                 <p>
@@ -48,10 +48,12 @@
                 <a class="dropdown-item" [routerLink]="[ '/pedido' ]">Mi perfil</a>
                 <a class="dropdown-item" [routerLink]="[ '/' ]">Usuarios</a>
                 <a class="dropdown-item" [routerLink]="[ '/restaurante' ]">Restaurantes</a>
+                <a class="dropdown-item" [routerLink]="[ '/menu' ]">Menu</a>
+                <a class="dropdown-item" (click)="logout()">Cerrar Sesion</a>
               </div>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#pablo">
+            <li class="nav-item" *ngIf="!usuario">
+              <a class="nav-link" [routerLink]="[ '/login' ]">
                 <i class="now-ui-icons users_single-02"></i>
                 <p>
                   <span class="d-lg-none d-md-block">Account</span>
