@@ -1,0 +1,46 @@
+<div class="main-content">
+  <div class="container" >
+    <div class="col-md-4 ml-auto mr-auto">
+        <form class="form" [formGroup]="FormLogin" (submit)="onLogin()">
+          <div class="card card-login card-plain">
+            <div class="card-header">
+                <div class="logo-container">
+                  <img alt="" src="assets/img/logo_sin_fondo.png">
+                </div>
+            </div>
+ 
+            <div class="card-body ">
+              <div class="form-group">
+                <div class="input-group no-border">
+                  <span class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="now-ui-icons users_circle-08"></i>
+                    </div>
+                  </span>
+                  <input name="email" type="email" class="form-control" placeholder="Email" formControlName="email">
+                </div>
+                <label *ngIf="FormLogin.controls.email.dirty && FormLogin.controls.email.errors?.email" class="error" for="required">Email invalid.</label>
+              </div>
+              <div class="input-group no-border">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="now-ui-icons text_caps-small"></i>
+                  </div>
+                </div>
+                <input class="form-control" placeholder="Contrasenia" type="password" name="password" formControlName="password">
+              </div>
+            </div>
+
+            <div class="card-footer ">
+              <button type="submit" [disabled]="FormLogin.invalid" class="btn btn-primary btn-round btn-lg btn-block mb-3">Iniciar Sesion</button>
+              <div class="pull-left">
+                <h6>
+                  <a class="link footer-link" href="#pablo">Registrate!!</a>
+                </h6>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>

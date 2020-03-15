@@ -1,0 +1,95 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+            <h5 class="title">Menu de </h5>
+          <!-- <h5 class="title">Menu de {{ restauranteService.newRest.nombre_rest }}</h5> -->
+        </div>
+        <div class="card-body">
+            <div >
+                <table class="table">
+                  <thead class=" text-primary">
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Tipo</th>
+                    <th class="text-right">Precio</th>
+                    <th>Imagen</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td class="text-right"></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+          <form [formGroup]="formMenu" (submit)="onMenu()">
+            <div class="row">
+              <div class="col-md-4 pr-1">
+                <div class="form-group">
+                  <label>Plato</label>
+                  <input type="text" class="form-control" 
+                    placeholder="Nombre del plato" required formControlName="nombre_menu">
+                </div>
+              </div>
+              <div class="col-md-4 pr-1">
+                <div class="form-group">
+                  <label>Precio</label>
+                  <input type="number" class="form-control" placeholder="$$" required formControlName="precio">
+                </div>
+              </div>
+              <div class="col-md-3 pr-1">
+                <div class="form-group">
+                  <label>Tipo de Producto</label><br>
+                  <select class="browser-default custom-select" formControlName="id_tipo">
+                    <option *ngFor="let tipo of tipoService.viewTipo" value="{{tipo.id_tipo}}">{{tipo.nombre_tipo}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Descripcion</label>
+                  <textarea rows="4" cols="80" class="form-control" placeholder="Detalla los ingredientes que componen este exquisito platillo" formControlName="descr_menu"></textarea>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row justify-content-center">
+              <div class="col-5">
+                <div class="form-group">
+                  <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                    <div class="fileinput-new thumbnail">
+                      <img src="./assets/img/image_placeholder.jpg" alt="...">
+                    </div>
+                    <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                    <div>
+                      <span class="btn btn-rose btn-round btn-file">
+                        <span class="fileinput-new">Imagen del Plato</span>
+                        <span class="fileinput-exists">Cambiar</span>
+                        <input type="file" formControlName="imag_menu" id="file-input"/>
+                      </span>
+                      <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i
+                          class="fa fa-times"></i> Eliminar</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-end">
+              <div class="card-footer">
+                <button class="btn btn-fill btn-primary mr-1" type="submit" [disabled]="!formMenu.valid">Guardar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
