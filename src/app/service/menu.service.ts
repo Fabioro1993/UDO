@@ -60,7 +60,7 @@ export class MenuService {
         this.viewMenu = this.menuFilter;
         
         this.viewMenu = this.menuFilter.filter(item => {
-          if (item.nombre_menu.indexOf(texto) != -1) {
+          if (item.nombre_menu.trim().toLowerCase().indexOf(texto.trim().toLowerCase()) != -1) {
             return item;
           }
         });
