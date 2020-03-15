@@ -21,9 +21,13 @@ export class MenuComponent implements OnInit {
     id_restaurant: new FormControl(''),
   });
 
+  restMenuVar: any;
+  viewMenu: any;
+
   constructor(public tipoService:TipoService, private menuService:MenuService, private restauranteService:RestauranteService, private router:Router) { }
 
   ngOnInit() {
+    this.restMenu();
   }
 
   onMenu(){
@@ -33,6 +37,30 @@ export class MenuComponent implements OnInit {
         console.log(resultado);
       }
     );
+  }
+
+  restMenu(){
+    this.menuService.getMenu().subscribe(
+      resultado =>
+      {
+        this.restMenuVar = resultado;
+
+        this.viewMenu = this.restMenuVar;
+        
+          this.viewMenu = this.restMenuVar.filter(item => {
+            // if (item.id_restaurant == this.restauranteService.newRest.id_restaurant ) {
+            if (item.id_restaurant == 1 ) {
+              return item;
+            }
+          });
+
+
+
+
+
+
+      }
+    )
   }
 
   /*updateProfilePhoto(idUser: number, file: File): Observable<any>{

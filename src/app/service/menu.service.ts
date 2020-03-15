@@ -71,9 +71,7 @@ export class MenuService {
 
   addMenuRest(formMenu){
     let json = JSON.stringify(formMenu);
-
     let header = new HttpHeaders().set('Content-type', 'application/json')
-
     return this.httpClient.post(this.ruta_env + "/menu/store", json, { headers: header });
   }
 }

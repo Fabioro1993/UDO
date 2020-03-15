@@ -8,27 +8,38 @@
           <!-- <h5 class="title">Menu de {{ restauranteService.newRest.nombre_rest }}</h5> -->
         </div>
         <div class="card-body">
-            <div >
-                <table class="table">
-                  <thead class=" text-primary">
-                    <th>Nombre</th>
-                    <th>Descripcion</th>
-                    <th>Tipo</th>
-                    <th class="text-right">Precio</th>
-                    <th>Imagen</th>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td class="text-right"></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
+          <table class="table">
+            <thead class=" text-primary">
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Tipo</th>
+              <th class="text-right">Precio</th>
+              <th>Imagen</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let menuRest of viewMenu">
+                <td>{{menuRest.nombre_menu}}</td>
+                <td>{{menuRest.descr_menu}}</td>
+                <td>{{menuRest.id_tipo}}</td>
+                <td class="text-right">{{menuRest.precio}}</td>
+                <td> {{menuRest.imag_menu}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Menu de </h5>
+          <!-- <h5 class="title">Menu de {{ restauranteService.newRest.nombre_rest }}</h5> -->
+        </div>
+        <div class="card-body">
           <form [formGroup]="formMenu" (submit)="onMenu()">
             <div class="row">
               <div class="col-md-4 pr-1">
@@ -93,3 +104,4 @@
       </div>
     </div>
   </div>
+</div>
