@@ -53,7 +53,7 @@
                       <span class="btn btn-rose btn-round btn-file">
                         <span class="fileinput-new">Imagen del Plato</span>
                         <span class="fileinput-exists">Cambiar</span>
-                        <input type="file" formControlName="imag_menu" id="file-input"/>
+                        <input type="file" (change)="fileMenu($event)" #fileUploader />
                       </span>
                       <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i
                           class="fa fa-times"></i> Eliminar</a>
@@ -78,8 +78,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-            <h5 class="title">Menu de </h5>
-          <!-- <h5 class="title">Menu de {{ restauranteService.newRest.nombre_rest }}</h5> -->
+          <h5 class="title">Menu de {{ restauranteService.newRest.nombre_rest }}</h5>
         </div>
         <div class="card-body">
           <table class="table">
@@ -99,7 +98,7 @@
                 <td>{{menuRest.id_tipo}}</td>
                 <td class="text-right">{{menuRest.precio}}</td>
                 <td class="td-actions">
-                  <button type="button" rel="tooltip" title="Editar" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
+                  <button type="button" rel="tooltip" title="Editar" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" (click)="open(content, menuRest.id_menu)">
                     <i class="now-ui-icons ui-2_settings-90"></i>
                   </button>
                   <button type="button" rel="tooltip" title="Eliminar" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" (click)="eliminarPlato(menuRest.id_menu)">
@@ -114,3 +113,72 @@
     </div>
   </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editar: {{viewMenuModal?.nombre_menu}}</h4> 
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formUpdate" (submit)="onMenu()">
+      <div class="row">
+        <div class="col-md-4 pr-1">
+          <div class="form-group">
+            <label>Plato</label>
+            <input type="text" class="form-control" 
+              placeholder="Nombre del plato" required formControlName="nombre_menu">
+          </div>
+        </div>
+        <div class="col-md-4 pr-1">
+          <div class="form-group">
+            <label>Precio</label>
+            <input type="number" class="form-control" placeholder="$$" required formControlName="precio" >
+          </div>
+        </div>
+        <div class="col-md-3 pr-1">
+          <div class="form-group">
+            <label>Tipo de Producto</label><br>
+            <select class="browser-default custom-select" formControlName="id_tipo">
+              <option *ngFor="let tipo of tipoService.viewTipo" value="{{tipo.id_tipo}}">{{tipo.nombre_tipo}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Descripcion</label>
+            <textarea rows="4" cols="80" class="form-control" placeholder="Detalla los ingredientes que componen este exquisito platillo" formControlName="descr_menu"></textarea>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row justify-content-center">
+        <div class="col-5">
+          <div class="form-group">
+            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+              <div class="fileinput-new thumbnail">
+                <img src="./assets/img/image_placeholder.jpg" alt="...">
+              </div>
+              <div class="fileinput-preview fileinput-exists thumbnail"></div>
+              <div>
+                <span class="btn btn-rose btn-round btn-file">
+                  <span class="fileinput-new">Imagen del Plato</span>
+                  <span class="fileinput-exists">Cambiar</span>
+                  <input type="file" id="file-input"/>
+                </span>
+                <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i
+                    class="fa fa-times"></i> Eliminar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>

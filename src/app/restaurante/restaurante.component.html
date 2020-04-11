@@ -86,7 +86,7 @@
                         <span class="btn btn-rose btn-round btn-file">
                             <span class="fileinput-new">Logo del negocio</span>
                             <span class="fileinput-exists">Cambiar</span>
-                            <input type="file" formControlName="logo_rest"/>
+                            <input type="file" (change)="fileRest($event)"/>
                         </span>
                     <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Eliminar</a>
                     </div>

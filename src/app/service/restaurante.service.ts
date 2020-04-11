@@ -18,6 +18,6 @@ export class RestauranteService {
   addRestaurante(restaurante: any){
     let json = JSON.stringify(restaurante);
     let headrs = new HttpHeaders().set('Content-type', 'application/json'); 
-    return this.httpClient.post(this.ruta_env+"/restaurante/store", json, { headers: headrs});
+    return this.httpClient.post(this.ruta_env+"/restaurante/store", restaurante);
   }
 }

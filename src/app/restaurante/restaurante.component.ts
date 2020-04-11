@@ -14,8 +14,9 @@ export class RestauranteComponent implements OnInit {
 
   viewMenu: any;
   FormRest: FormGroup;
+  file: any;
 
-  constructor(private restauranteService:RestauranteService /*private cd: ChangeDetectorRef, private router:Router */) {
+  constructor(private restauranteService:RestauranteService, private cd: ChangeDetectorRef, private router:Router) {
     this.FormRest = new FormGroup(
       {
         nombre_rest: new FormControl('', [Validators.required, Validators.maxLength(191)]),
@@ -27,36 +28,32 @@ export class RestauranteComponent implements OnInit {
         telefono: new FormControl('', [Validators.required, Validators.maxLength(11), Validators.minLength(11)]),
         email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(191)]),
         direccion: new FormControl('', [Validators.required, Validators.maxLength(191)]),
-        logo_rest: new FormControl('', [Validators.required, Validators.maxLength(191)])
       }
     )
    }
   
   ngOnInit() {}
 
-  /*onFileChange(event) {
-    const reader = new FileReader();
- 
-    if(event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
-  
-      reader.onload = () => {
-        this.FormRest.patchValue({
-          file: reader.result
-       });
-      
-        // need to run CD since file load runs outside of zone
-        this.cd.markForCheck();
-      };
-    }
-  }*/
+  fileRest(event) {
+    this.file = event.target.files[0];
+  }
 
   onRest(){
-    this.restauranteService.addRestaurante(this.FormRest.value).subscribe(
+    const data = new FormData();
+    data.append('logo_rest', this.file, this.file.name);
+    data.append('nombre_rest', this.FormRest.value.nombre_rest);
+    data.append('telefono_rest', this.FormRest.value.telefono_rest);
+    data.append('social', this.FormRest.value.social);
+    data.append('direccion_rest', this.FormRest.value.direccion_rest);
+    data.append('nombre', this.FormRest.value.nombre);
+    data.append('cedula', this.FormRest.value.cedula);
+    data.append('telefono', this.FormRest.value.telefono);
+    data.append('email', this.FormRest.value.email);
+    data.append('direccion', this.FormRest.value.direccion);
+
+    this.restauranteService.addRestaurante(data).subscribe(
       resultado => {
         this.restauranteService.newRest = resultado;
-        //console.log(resultado)
         this.viewMenu = '1';
       }
     )
