@@ -5,7 +5,6 @@
       <div class="card">
         <div class="card-header">
           <h5 class="title">Agregar Platillo</h5>
-          <!-- <h5 class="title">Menu de {{ restauranteService.newRest.nombre_rest }}</h5> -->
         </div>
         <div class="card-body">
           <form [formGroup]="formMenu" (submit)="onMenu()">
@@ -81,7 +80,7 @@
           <h5 class="title">Menu de {{ restauranteService.newRest.nombre_rest }}</h5>
         </div>
         <div class="card-body">
-          <table class="table">
+          <table class="table table-menu">
             <thead class=" text-primary">
               <th>Imagen</th>
               <th>Nombre</th>
@@ -92,10 +91,14 @@
             </thead>
             <tbody>
               <tr *ngFor="let menuRest of viewMenu">
-                <td> {{menuRest.imag_menu}}</td>
+                <td>
+                  <div class="img-container">
+                    <img src="{{ruta_env}}{{menuRest.imag_menu}}" alt="...">
+                  </div>
+                </td>
                 <td>{{menuRest.nombre_menu}}</td>
                 <td>{{menuRest.descr_menu}}</td>
-                <td>{{menuRest.id_tipo}}</td>
+                <td>{{menuRest.tipo_comida.nombre_tipo}}</td>
                 <td class="text-right">{{menuRest.precio}}</td>
                 <td class="td-actions">
                   <button type="button" rel="tooltip" title="Editar" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" (click)="open(content, menuRest.id_menu)">
@@ -116,13 +119,13 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Editar: {{viewMenuModal?.nombre_menu}}</h4> 
+    <h4 class="modal-title" id="modal-basic-title">Editar: {{viewMenuModal?.nombre_menu}}</h4>   
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
-    </button>
+    </button> 
   </div>
-  <div class="modal-body">
-    <form [formGroup]="formUpdate" (submit)="onMenu()">
+  <form [formGroup]="formUpdate">
+    <div class="modal-body">
       <div class="row">
         <div class="col-md-4 pr-1">
           <div class="form-group">
@@ -131,7 +134,7 @@
               placeholder="Nombre del plato" required formControlName="nombre_menu">
           </div>
         </div>
-        <div class="col-md-4 pr-1">
+        <div class="col-md-3 pr-1">
           <div class="form-group">
             <label>Precio</label>
             <input type="number" class="form-control" placeholder="$$" required formControlName="precio" >
@@ -144,6 +147,16 @@
               <option *ngFor="let tipo of tipoService.viewTipo" value="{{tipo.id_tipo}}">{{tipo.nombre_tipo}}</option>
             </select>
           </div>
+        </div>
+        <div class="col-md-2 pr-1">
+          <label>Estado</label>
+          <div class="form-check" >
+            <label class="form-check-label" >
+              <input class="form-check-input" type="checkbox" checked formControlName="id_nivel" *ngIf="viewMenuModal.id_nivel == 4">
+              <input class="form-check-input" type="checkbox" formControlName="id_nivel" *ngIf="viewMenuModal.id_nivel == 5">
+              <span class="form-check-sign">Activo {{viewMenuModal.id_nivel}}</span>
+            </label>
+          </div> 
         </div>
       </div>
       <div class="row">
@@ -160,14 +173,14 @@
           <div class="form-group">
             <div class="fileinput fileinput-new text-center" data-provides="fileinput">
               <div class="fileinput-new thumbnail">
-                <img src="./assets/img/image_placeholder.jpg" alt="...">
+                <img src="{{ruta_env}}{{viewMenuModal?.imag_menu}}" alt="...">
               </div>
               <div class="fileinput-preview fileinput-exists thumbnail"></div>
               <div>
                 <span class="btn btn-rose btn-round btn-file">
                   <span class="fileinput-new">Imagen del Plato</span>
                   <span class="fileinput-exists">Cambiar</span>
-                  <input type="file" id="file-input"/>
+                  <input type="file" (change)="fileMenu($event)" />
                 </span>
                 <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i
                     class="fa fa-times"></i> Eliminar</a>
@@ -176,9 +189,9 @@
           </div>
         </div>
       </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-  </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+  </form>
 </ng-template>

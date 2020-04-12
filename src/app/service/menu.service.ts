@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -71,6 +71,14 @@ export class MenuService {
 
   addMenuRest(menu: any){
     return this.httpClient.post(this.ruta_env + "/menu/store", menu);
+  }
+
+  updateMenuRest(updatemenu: any, id:number){
+    let param = new HttpParams()
+    .set('updatemenu',updatemenu);
+    //console.log(updatemenu)
+    //return this.httpClient.get(this.ruta_env + "/menu/"+id+"/update", {params:param});
+    return this.httpClient.post(this.ruta_env + "/menu/"+id+"/update", updatemenu);
   }
 
   deleteMenuRest(id){
