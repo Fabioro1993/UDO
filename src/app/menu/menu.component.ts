@@ -37,7 +37,7 @@ export class MenuComponent implements OnInit {
       {
         nombre_menu: new FormControl('', [Validators.required, Validators.maxLength(191)]),
         descr_menu: new FormControl('', [Validators.required, Validators.maxLength(191)]),
-        precio: new FormControl('', [Validators.required]),
+        precio: new FormControl('', [Validators.required, Validators.pattern('/^[1-9]\d{6,10}$/')]),
         id_tipo: new FormControl('', [Validators.required]),
         id_restaurant: new FormControl(''),
       }
@@ -125,6 +125,13 @@ export class MenuComponent implements OnInit {
             return item;
           }
         })[0];
+
+        if (this.viewMenuModal.id_nivel == 4) {
+          this.viewMenuModal.id_nivel = true;
+        } else {
+          this.viewMenuModal.id_nivel = false;
+        };
+        
         this.formUpdate.setValue({
           
           nombre_menu: this.viewMenuModal.nombre_menu,
