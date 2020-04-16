@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../service/usuario.service'
 import { MenuService } from '../service/menu.service';
+import { Router } from '@angular/router';
+import { count } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pedido',
@@ -13,11 +15,18 @@ export class PedidoComponent implements OnInit {
     nombre: '', cedula: '', telefono: '', direccion: ''
   }
   usuarioFilter: any;
-  menu: any;
+  menu: any[] = [];
+  menuFun: any;
+  valid: any;
   sumaTotal: number = 0;
   //viewMenu: any[] = [];
 
-  constructor(private usuarioService:UsuarioService, private menuService: MenuService) { }
+  textoDeInput: any[] = [];
+
+
+  constructor(private usuarioService:UsuarioService, public menuService: MenuService, private router: Router) { 
+
+  }
 
   ngOnInit() {
     this.getUser();
@@ -26,14 +35,27 @@ export class PedidoComponent implements OnInit {
   }
 
   getMenu() {
+    
+    if (this.menuService.pedidoMenu==undefined) {
+      this.router.navigate(['/']);
+    }
+    
     this.menuService.getMenu().subscribe(
       resultado => {
-        this.menu = resultado;
+        
+        this.menuFun = resultado;
 
+        this.menuService.pedidoMenu.forEach( a =>
+          this.menuFun.forEach(item => {
+            if (item.id_menu == a) {
+              this.menu.push(item)
+            }
+          })
+        )
+        
         this.menu.map(x =>
           this.sumaTotal += x.precio
-       )
-        //console.log(this.sumaTotal)
+        )
       },
       error => {
         console.log(JSON.stringify(error));
@@ -55,6 +77,11 @@ export class PedidoComponent implements OnInit {
         console.log(JSON.stringify(error));
       }
     )
+  }
+
+  cantPrecio(e){
+    
+    console.log('aa', this.textoDeInput[e], e, this.textoDeInput);
   }
 
 }

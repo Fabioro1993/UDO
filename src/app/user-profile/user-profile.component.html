@@ -88,18 +88,18 @@
     <div class="col-md-4" *ngFor="let menu of menuService.viewMenu">
       <div class="card card-user">
         <div class="image">
-          <img src="../assets/img/comida/chesse.jpeg" alt="...">
+          <img src="{{ruta_env}}{{menu.restaurante.logo_rest}}" alt="...">
         </div>
         <div class="card-body">
           <div class="author">
             <a href="#">
-              <img class="avatar border-gray" src="../assets/img/comida/{{menu.imag_menu}}.jpeg" alt="...">
+              <img class="avatar border-gray" src="{{ruta_env}}{{menu.imag_menu}}" alt="...">
               <h5 class="title">{{menu.nombre_menu}}</h5>
             </a>
             <p class="description">
               {{menu.restaurante.nombre_rest}}
               <br>
-              {{menu.precio}} $$
+              {{menu.precio}} $
             </p>
           </div>
           <p class="description text-center">
@@ -108,17 +108,24 @@
         </div>
         <hr>
         <div class="button-container">
-          <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
+          <div class="form-check" *ngIf="usuario">
+            <label class="form-check-label" >
+              <input class="form-check-input" type="checkbox" (click)="check(menu.id_menu)">
+              <span class="form-check-sign title">Pedir</span>
+            </label>
+          </div> 
+          <!-- <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
             <i class="fab fa-facebook-f"></i>
           </button>
           <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
             <i class="fab fa-twitter"></i>
           </button>
-          <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
+          <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg" >
             <i class="fab fa-instagram"></i>
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
   </div>
 </div>
+<button class="btn btn-primary btn-round btn-icon flotante" *ngIf="usuario" [hidden]="isHidden" (click)="pedido()"><i class="now-ui-icons ui-1_check"></i></button>

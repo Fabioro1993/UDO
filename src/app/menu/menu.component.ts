@@ -1,13 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+
+//Servicios
+import { RestauranteService } from '../service/restaurante.service';
 import { TipoService } from '../service/tipo.service';
 import { MenuService } from '../service/menu.service';
-import { Router } from '@angular/router';
-import { RestauranteService } from '../service/restaurante.service';
-import Swal from 'sweetalert2';
-import { environment } from '../../environments/environment';
 
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-menu',
@@ -17,27 +18,22 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 export class MenuComponent implements OnInit {
 
   ruta_env = environment.ruta_base;
+  formUpdate: FormGroup;
+  formMenu: FormGroup;
   closeResult: string;
+  viewMenuModal: any;
+  modalMenuVar: any;
   restMenuVar: any;
   viewMenu: any;
-  modalMenuVar: any;
-  viewMenuModal: any;
-  //var: any;
   file: any;
-  //imagUpdate: any;
-  formMenu: FormGroup;
-  formUpdate: FormGroup;
-
-
- // @ViewChild('fileUploader') fileUploader:ElementRef;
-
-  constructor(public tipoService:TipoService, private menuService:MenuService, private restauranteService:RestauranteService, private router:Router, private modalService: NgbModal) { 
+  
+  constructor(public tipoService:TipoService, private menuService:MenuService, private restauranteService:RestauranteService, private modalService: NgbModal) { 
 
     this.formMenu = new FormGroup(
       {
         nombre_menu: new FormControl('', [Validators.required, Validators.maxLength(191)]),
         descr_menu: new FormControl('', [Validators.required, Validators.maxLength(191)]),
-        precio: new FormControl('', [Validators.required, Validators.pattern('/^[1-9]\d{6,10}$/')]),
+        precio: new FormControl('', [Validators.required]),
         id_tipo: new FormControl('', [Validators.required]),
         id_restaurant: new FormControl(''),
       }
@@ -52,6 +48,49 @@ export class MenuComponent implements OnInit {
       id_nivel: new FormControl('', [Validators.required]),
       id_restaurant: new FormControl(''),
     });
+  }
+
+  ngOnInit() {
+    this.restMenu();
+  }
+
+  restMenu(){
+    this.menuService.getMenu().subscribe(
+      resultado =>
+      {
+        this.restMenuVar = resultado;
+        this.viewMenu = this.restMenuVar;
+        this.viewMenu = this.restMenuVar.filter(item => {
+          if (item.id_restaurant == this.restauranteService.newRest.id_restaurant ) {
+            return item;
+          }
+        });
+      }
+    )
+  }
+
+  onMenu(){
+    const data = new FormData();
+
+    data.append('imag_menu', this.file, this.file.name);
+    data.append('nombre_menu', this.formMenu.value.nombre_menu);
+    data.append('descr_menu', this.formMenu.value.descr_menu);
+    data.append('precio', this.formMenu.value.precio);
+    data.append('id_tipo', this.formMenu.value.id_tipo);
+    data.append('id_restaurant', this.restauranteService.newRest.id_restaurant);
+
+    this.menuService.addMenuRest(data).subscribe(
+      resultado => {
+        this.restMenu();
+        this.formMenu.reset();
+        let btnCancel: any = document.querySelector('.btn.btn-danger.btn-round');
+        btnCancel.click();
+      }
+    )
+  }
+
+  fileMenu(event) {
+    this.file = event.target.files[0];
   }
 
   open(content, idModal) {
@@ -73,46 +112,6 @@ export class MenuComponent implements OnInit {
     } else {
       return  `with: ${reason}`;
     }
-  }
-
-  ngOnInit() {
-    this.restMenu();
-  }
-  
-  onMenu(){
-    const data = new FormData();
-
-    data.append('imag_menu', this.file, this.file.name);
-    data.append('nombre_menu', this.formMenu.value.nombre_menu);
-    data.append('descr_menu', this.formMenu.value.descr_menu);
-    data.append('precio', this.formMenu.value.precio);
-    data.append('id_tipo', this.formMenu.value.id_tipo);
-    data.append('id_restaurant', this.restauranteService.newRest.id_restaurant);
-
-    console.log(data);
-    this.menuService.addMenuRest(data).subscribe(
-      resultado => {
-        this.restMenu();
-        this.formMenu.reset();
-        let btnCancel: any = document.querySelector('.btn.btn-danger.btn-round');
-        btnCancel.click();
-      }
-    )
-  }
-
-  restMenu(){
-    this.menuService.getMenu().subscribe(
-      resultado =>
-      {
-        this.restMenuVar = resultado;
-        this.viewMenu = this.restMenuVar;
-        this.viewMenu = this.restMenuVar.filter(item => {
-          if (item.id_restaurant == this.restauranteService.newRest.id_restaurant ) {
-            return item;
-          }
-        });
-      }
-    )
   }
 
   modalMenuFun(idModalFun){
@@ -166,7 +165,7 @@ export class MenuComponent implements OnInit {
 
       }
     )
-  }
+  }  
   
   eliminarPlato(id_menu: number){
     Swal.fire({
@@ -201,9 +200,5 @@ export class MenuComponent implements OnInit {
         )
       }
     })
-  }
-
-  fileMenu(event) {
-    this.file = event.target.files[0];
   }
 }

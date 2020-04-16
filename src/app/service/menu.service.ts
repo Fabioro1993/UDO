@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class MenuService {
   viewMenu: any;
   id_new: any;
   titulo: string = 'Todo';
+  pedidoMenu: any;
 
   constructor( private httpClient:HttpClient) { }
 
@@ -74,15 +76,16 @@ export class MenuService {
   }
 
   updateMenuRest(updatemenu: any, id:number){
-    let param = new HttpParams()
-    .set('updatemenu',updatemenu);
-    //console.log(updatemenu)
-    //return this.httpClient.get(this.ruta_env + "/menu/"+id+"/update", {params:param});
     return this.httpClient.post(this.ruta_env + "/menu/"+id+"/update", updatemenu);
   }
 
   deleteMenuRest(id){
-    //let header = new HttpHeaders().set('Content-type', 'application/json')
     return this.httpClient.get(this.ruta_env + "/menu/"+id+"/delete");
   }
+
+  pedidoFuntion(pedido: any){
+    this.pedidoMenu = pedido;
+    return this.pedidoMenu;
+  }
+
 }

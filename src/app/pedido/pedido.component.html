@@ -43,6 +43,7 @@
                       <table class="table">
                         <thead class=" text-primary">
                           <th></th>
+                          <th>Restaurante</th>
                           <th>Producto</th>
                           <th>Descripcion</th>
                           <th class="text-right">Cantidad</th>
@@ -58,13 +59,16 @@
                                 </label>
                               </div>
                             </td>
+                            <td>{{item.restaurante.nombre_rest}}</td>
                             <td>{{item.nombre_menu}}</td>
                             <td>{{item.descr_menu}}</td>
-                            <td class="td-actions text-right">2</td>
+                            <td class="td-actions text-right">
+                              <input type="number" class="form-control" min="1" value="1" (keyup)="cantPrecio(item.id_menu)" [(ngModel)]='textoDeInput[item.id_menu]' >
+                            </td>
                             <td class="td-actions text-right">{{item.precio}}</td>
                           </tr>
                           <tr>
-                            <td colspan="4" class="text-right">total</td>
+                            <td colspan="5" class="text-right">total</td>
                             <td>{{sumaTotal}} $$</td>
                           </tr>
                         </tbody>
